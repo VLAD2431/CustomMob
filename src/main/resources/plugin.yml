@@ -1,0 +1,13 @@
+name: CustomMob
+version: 1.0.0
+main: com.example.RockFrostPlugin
+api-version: "1.21"
+author: VLADMIX90
+commands:
+  custommob:
+    description: Управление мобами ивента Волны рок мороза
+    usage: /custommob <spawn|reload>
+    permission: rockfrost.admin
+permissions:
+  rockfrost.admin:
+    default: op

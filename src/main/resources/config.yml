@@ -1,0 +1,418 @@
+mobs:
+  harry_mono:
+    entity-type: ZOMBIE
+    custom-name: "Гарри Моно"
+    max-health: 524.2
+    movement-speed: 0.50
+    detection-range: 47.0
+    # Интервал после завершения спецатаки. В это время босс бьёт вблизи.
+    special-attack-interval-ticks: 70
+    zone-particle-period-ticks: 5
+    melee:
+      range: 2.2
+      damage: 8.0
+      cooldown-ticks: 20
+    # Вероятность = weight / сумма весов. 0 отключает атаку; повторы разрешены.
+    ram:
+      weight: 1.0
+      windup-ticks: 20
+      speed-per-tick: 2.5
+      max-distance: 12.0
+      hitbox-radius: 0.7
+      damage: 40.0
+      knockback: 1.8
+      knockback-y: 0.5
+      trail-duration-ticks: 100
+      trail-spacing: 0.5
+      trail-radius: 0.7
+      trail-damage: 6.7
+      trail-damage-period-ticks: 5
+    oil-bomb:
+      weight: 1.0
+      speed: 1.1
+      gravity: 0.03
+      hitbox-radius: 0.3
+      max-distance: 50.0
+      max-flight-ticks: 160
+      radius: 3.0
+      duration-ticks: 300
+      initial-damage: 20.0
+      slow-refresh-ticks: 5
+      slow-duration-ticks: 15
+      slow-amplifier: 1 # 0 = первый уровень
+      burn-duration-ticks: 1000
+    spin:
+      weight: 1.0
+      windup-ticks: 20
+      duration-ticks: 200
+      degrees-per-tick: 40.0
+      radius: 12.0
+      pull-strength: 0.35
+      damage: 4.0
+      damage-period-ticks: 2
+    jump:
+      weight: 1.0
+      keep-distance: 8.0
+      prepare-timeout-ticks: 60
+      vertical-speed: 2.2
+      horizontal-speed: 1
+      max-flight-ticks: 40
+      radius: 10.0
+      damage: 30.0
+      stun-duration-ticks: 80
+    # События: melee, ram-prepare/start/hit/trail, oil-prepare/throw/flight/impact/pool/ignite,
+    # spin-prepare/start/loop, jump-prepare/start/land; ambient/hurt/death — общие.
+    sounds:
+      ram-prepare:
+        {
+          sound: ENTITY_HORSE_BREATHE,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 0.6,
+        }
+      ram-start:
+        {
+          sound: ENTITY_ENDER_DRAGON_FLAP,
+          category: HOSTILE,
+          volume: 1.5,
+          pitch: 1.5,
+        }
+      ram-hit:
+        {
+          sound: ENTITY_PLAYER_ATTACK_CRIT,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 1.0,
+        }
+      oil-throw:
+        {
+          sound: ENTITY_WITCH_THROW,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 0.8,
+        }
+      oil-impact:
+        {
+          sound: ENTITY_SPLASH_POTION_BREAK,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 0.7,
+        }
+      oil-ignite:
+        {
+          sound: ITEM_FIRECHARGE_USE,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 1.0,
+        }
+      spin-start:
+        {
+          sound: ENTITY_BREEZE_WIND_BURST,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 0.7,
+        }
+      jump-start:
+        { sound: ENTITY_HORSE_JUMP, category: HOSTILE, volume: 1.0, pitch: 0.7 }
+      jump-land:
+        {
+          sound: ENTITY_GENERIC_EXPLODE,
+          category: HOSTILE,
+          volume: 1.5,
+          pitch: 0.7,
+        }
+      hurt:
+        {
+          sound: ENTITY_GUARDIAN_HURT,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      death:
+        {
+          sound: ENTITY_GUARDIAN_DEATH,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+    particles:
+      ram-prepare:
+        - { type: SMOKE, count: 12, offset: [0.4, 0.1, 0.4], extra: 0.01 }
+      ram-start:
+        - { type: CLOUD, count: 20, offset: [0.4, 0.2, 0.4], extra: 0.05 }
+      ram-hit:
+        - { type: CRIT, count: 20, offset: [0.4, 0.8, 0.4], extra: 0.1 }
+      ram-trail:
+        - { type: FLAME, count: 2, offset: [0.25, 0.05, 0.25], extra: 0.0 }
+      oil-flight:
+        - { type: SQUID_INK, count: 2, offset: [0.1, 0.1, 0.1], extra: 0.0 }
+      oil-impact:
+        - {
+            type: DUST_COLOR_TRANSITION,
+            from-color: [0, 0, 0],
+            to-color: [0, 0, 0],
+            scale: 0.5,
+            count: 60,
+            offset: [0.8, 0.1, 0.8],
+            extra: 0.0,
+          }
+      oil-pool:
+        - {
+            type: DUST_COLOR_TRANSITION,
+            from-color: [0, 0, 0],
+            to-color: [0, 0, 0],
+            scale: 0.8,
+            count: 60,
+            offset: [0.8, 0.1, 0.8],
+            extra: 0.0,
+          }
+      oil-ignite:
+        - { type: FLAME, count: 60, offset: [1.5, 0.3, 1.5], extra: 0.03 }
+      spin-prepare:
+        - { type: CLOUD, count: 20, offset: [0.5, 0.2, 0.5], extra: 0.0 }
+      spin-loop:
+        - { type: SWEEP_ATTACK, count: 4, offset: [1.0, 0.4, 1.0], extra: 0.0 }
+        - {
+            type: CLOUD,
+            count: 12,
+            offset: [0.7, 0.05, 0.7],
+            y-offset: 0.05,
+            extra: 0.02,
+          }
+      jump-start:
+        - { type: CLOUD, count: 20, offset: [0.5, 0.1, 0.5], extra: 0.05 }
+      jump-land:
+        - {
+            type: DUST_PILLAR,
+            count: 60,
+            offset: [2.0, 0.1, 2.0],
+            y-offset: 0.1,
+            extra: 0.0,
+          }
+  pumpkin:
+    entity-type: ZOMBIE
+    custom-name: "Тыквитель"
+    max-health: 40.0
+    movement-speed: 0.35
+    detection-range: 32.0
+    melee-range: 2.2
+    melee-damage: 6.0
+    melee-cooldown-ticks: 20
+  pumpkin_soul:
+    entity-type: ZOMBIE
+    custom-name: "Тыквитель Душ"
+    max-health: 35.0
+    movement-speed: 0.20
+    detection-range: 32.0
+    keep-distance: 10.0
+    attack-cooldown-ticks: 60
+    projectile:
+      max-distance: 32.0
+      speed-per-tick: 0.8
+      hitbox-radius: 0.3
+      damage: 5.0
+    particles:
+      projectile-trail:
+        - {
+            type: SOUL_FIRE_FLAME,
+            offset: [0.1, 0.1, 0.1],
+            extra: 0.0,
+            count: 5,
+          }
+  pumpkin_brute:
+    entity-type: ZOMBIE
+    custom-name: "Тыквитель Брута"
+    max-health: 60.0
+    movement-speed: 0.18
+    detection-range: 32.0
+    melee-range: 2.2
+    melee-damage: 10.0
+    melee-cooldown-ticks: 30
+    explosion:
+      radius: 4.0
+      damage: 8.0
+      nausea-duration-ticks: 120
+      nausea-amplifier: 2
+    sounds:
+      explosion:
+        {
+          sound: ENTITY_GENERIC_EXPLODE,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 1.0,
+        }
+    particles:
+      explosion:
+        - {
+            type: EXPLOSION_EMITTER,
+            offset: [0.0, 0.0, 0.0],
+            extra: 0.0,
+            count: 1,
+          }
+  pumpkin_poison:
+    entity-type: ZOMBIE
+    custom-name: "Тыквитель Яда"
+    max-health: 35.0
+    movement-speed: 0.35
+    detection-range: 32.0
+    melee-range: 2.2
+    melee-damage: 4.0
+    melee-cooldown-ticks: 20
+    poison-duration-ticks: 60
+    poison-amplifier: 0
+  skelebass:
+    entity-type: SKELETON
+    custom-name: "СкелеБас"
+    max-health: 40.0
+    movement-speed: 0.25
+    keep-distance: 12.0 # Желаемая дистанция до игрока.
+    attack-cooldown-ticks: 60
+    projectile:
+      max-distance: 50.0
+      speed-per-tick: 1.5
+      hitbox-radius: 0.8
+      damage: 8.0
+      knockback-strength: 1.8
+      pierce-entities: false
+    sounds:
+      ambient:
+        {
+          sound: ENTITY_GUARDIAN_AMBIENT,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      hurt:
+        {
+          sound: ENTITY_GUARDIAN_HURT,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      death:
+        {
+          sound: ENTITY_GUARDIAN_DEATH,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      shoot:
+        {
+          sound: "quack_mob:skelebass.attack",
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 1.0,
+          repeat: 1,
+        }
+      projectile-loop:
+        {
+          sound: "minecraft:block.note_block.bass",
+          category: HOSTILE,
+          volume: 0.5,
+          pitch: 0.0,
+          max-distance: 20.0,
+          repeat: 1,
+        }
+    particles:
+      projectile-trail:
+        - {
+            type: DUST_COLOR_TRANSITION,
+            from-color: [255, 0, 0],
+            to-color: [0, 110, 255],
+            scale: 3.0,
+            offset: [0.1, 0.1, 0.1],
+            extra: 0.0,
+            count: 4,
+          }
+        - { type: NOTE, offset: [0.35, 0.0, 0.0], extra: 1.0, count: 0 }
+        - {
+            type: FLASH,
+            color: [255, 255, 255],
+            offset: [0.2, 0.2, 0.2],
+            extra: 0.0,
+            count: 1,
+          }
+  dancebomber:
+    entity-type: SKELETON
+    custom-name-normal: "ДенсБомбер"
+    custom-name-headless: "Безголовый ДенсБомбер"
+    max-health: 50.0
+    normal-movement-speed: 0.25
+    headless-movement-speed: 0.42
+    keep-distance: 10.0 # Желаемая дистанция до игрока.
+    headless-duration-ticks: 100
+    throw-cooldown-ticks: 40
+    melee-damage: 6.0
+    melee-cooldown-ticks: 20
+    melee-range: 2.2
+    bomb-projectile:
+      material: WOODEN_HOE
+      custom-model-data-string: densbomb
+      item-model: ""
+      speed: 1.1
+      gravity: 0.03
+      max-distance: 50.0
+      hitbox-radius: 0.8
+      explosion-radius: 4.5
+      explosion-damage: 12.0
+      explosion-knockback: 1.2
+    sounds:
+      ambient:
+        {
+          sound: ENTITY_GUARDIAN_AMBIENT,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      hurt:
+        {
+          sound: ENTITY_GUARDIAN_HURT,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      death:
+        {
+          sound: ENTITY_GUARDIAN_DEATH,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+        }
+      throw-head:
+        {
+          sound: ENTITY_FIREWORK_ROCKET_LAUNCH,
+          category: HOSTILE,
+          volume: 10.0,
+          pitch: 1.5,
+          repeat: 1,
+        }
+      flying-head-loop:
+        {
+          sound: BLOCK_LEVER_CLICK,
+          category: HOSTILE,
+          volume: 1.0,
+          pitch: 2.0,
+          repeat: 1,
+        }
+      explosion:
+        {
+          sound: ENTITY_GENERIC_EXPLODE,
+          category: MASTER,
+          volume: 10.0,
+          pitch: 1.0,
+          max-distance: 20.0,
+          repeat: 3,
+        }
+    particles:
+      throw-head:
+        - { type: CLOUD, offset: [0.2, 0.2, 0.2], extra: 0.001, count: 100 }
+      flying-head-trail:
+        - { type: CLOUD, offset: [0.15, 0.15, 0.15], extra: 0.25, count: 3 }
+      explosion:
+        - {
+            type: EXPLOSION_EMITTER,
+            offset: [0.0, 0.0, 0.0],
+            extra: 1.0,
+            count: 1,
+          }
+        - { type: CLOUD, offset: [3.0, 3.0, 3.0], extra: 0.25, count: 35 }
